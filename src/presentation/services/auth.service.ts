@@ -1,4 +1,4 @@
-import { bcryptAdapter } from '../../config';
+import { bcryptAdapter, JwtAdapter } from '../../config';
 import { UserModel } from '../../data';
 import {
   CustomError,
@@ -26,12 +26,8 @@ export class AuthService {
       //JWT <---to keep the user authentication
 
       //Confirmation email
-      //console.log('UserEntity.fromObject');
-      //console.log(user);
+
       const { password, ...userEntity } = UserEntity.fromObject(user);
-      //console.log(user);
-      //console.log('entity here');
-      //console.log(userEntity);
 
       return { user: userEntity, token: 'ABC' };
     } catch (error) {
@@ -43,16 +39,24 @@ export class AuthService {
     const user = await UserModel.findOne({ email: loginUserDto.email });
     if (!user) throw CustomError.badRequest('Email does not exist');
 
-    try {
-      if (!bcryptAdapter.compare(loginUserDto.password, user!.password)) {
-        throw CustomError.internalServer('Invalid credentials');
-      }
-
-      const { password, ...userEntity } = UserEntity.fromObject(loginUserDto);
-
-      return { user: userEntity, token: 'ABC' };
-    } catch (error) {
-      throw CustomError.internalServer(`${error}`);
+    //try {
+    if (!bcryptAdapter.compare(loginUserDto.password, user!.password)) {
+      throw CustomError.internalServer('Invalid credentials');
     }
+
+    const { password, ...userEntity } = UserEntity.fromObject(user);
+
+    const token = await JwtAdapter.generateToken({
+      id: user.id,
+      email: user.email,
+    });
+    if (!token) {
+      throw CustomError.internalServer('Error while creating token');
+    }
+
+    return { user: userEntity, token: token };
+    //} catch (error) {
+    //  throw CustomError.internalServer(`${error}`);
+    //}
   }
 }

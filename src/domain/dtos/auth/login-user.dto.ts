@@ -1,7 +1,7 @@
 import { regularExps } from '../../../config';
 
 export class LoginUserDto {
-  constructor(public email: string, public password: string) {}
+  private constructor(public email: string, public password: string) {}
 
   static login(object: { [key: string]: any }): [string?, LoginUserDto?] {
     const { email, password } = object;
