@@ -4,3 +4,4 @@ export * from './dtos/category/create-catetory.dto';
 export * from './dtos/shared/pagination.dto';
 export * from './entities/user.entity';
 export * from './errors/custom.error';
+export * from './dtos/products/create-products.dto';
