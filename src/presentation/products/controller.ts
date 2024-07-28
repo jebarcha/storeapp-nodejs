@@ -15,10 +15,10 @@ export class ProductController {
   };
 
   createProduct = (req: Request, res: Response) => {
-    console.log({
-      ...req.body,
-      user: req.body.user.id,
-    });
+    // console.log({
+    //   ...req.body,
+    //   user: req.body.user.id,
+    // });
     const [error, createProductDto] = CreateProductDto.create({
       ...req.body,
       user: req.body.user.id,
