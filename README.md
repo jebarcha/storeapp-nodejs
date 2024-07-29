@@ -10,9 +10,5 @@ Cada paso de su configuración ya se ha realizado previamente en el curso, por l
 1. Clonar .env.template a .env y configurar las variables de entorno
 2. Ejecutar `npm install` para instalar las dependencias
 3. En caso de necesitar base de datos, configurar el docker-compose.yml y ejecutar `docker-compose up -d` para levantar los servicios deseados.
-4. Ejecutar `npm run dev` para levantar el proyecto en modo desarrollo
-
-## populate with seed data
-DO NOT PERFORM this command in Production because it will initialize the db
-
-```npm run seed```
+4. Llenar la base de datos con los datos de prueba ejectando `npm run seed`
+5. Ejecutar `npm run dev` para levantar el proyecto en modo desarrollo
